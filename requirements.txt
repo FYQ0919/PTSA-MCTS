@@ -1,0 +1,11 @@
+numpy
+ray
+matplotlib
+opencv_python
+torch
+gym
+pydot
+pyglet
+pytz
+box2d-py
+tensorboard
