@@ -203,6 +203,7 @@ class MCTS(object):
       _, action, child = max(
           (child.prior, action, child)
           for action, child in node.children.items())
+      return action, child
     else:
       for action, child in node.children.items():
         if not child.block:
@@ -216,11 +217,14 @@ class MCTS(object):
         else:
           continue
 
-    best_action = 0
     if len(max_index_lst) > 0:
       best_action = np.random.choice(max_index_lst)
-
-    return best_action, node.children[best_action]
+      child = node.children[best_action]
+    else:
+      _, best_action, child = max(
+        (child.prior, action, child)
+        for action, child in node.children.items())
+    return best_action, child
 
   def ucb_score(self, parent, child):
     pb_c = math.log((parent.visit_count + self.pb_c_base + 1) / self.pb_c_base) + self.pb_c_init
